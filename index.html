@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Scale Degrees &amp; Personalities — Block 2 · Art of Slow Blues</title>
+<style>
+  :root {
+    --paper:      #FAFAF7;
+    --paper-warm: #F4F0E8;
+    --ink:        #1A1814;
+    --ink-mid:    #3A3630;
+    --ink-light:  #6A6560;
+    --rule:       #D8D0C0;
+    --blue:       #32a7e3;
+    --blue-pale:  rgba(50,167,227,0.07);
+    --gold:       #A87820;
+    --gold-rich:  #C89830;
+    --gold-pale:  rgba(168,120,32,0.08);
+    --dark:       #14120E;
+    --dark-2:     #1e1c18;
+    --white:      #f7f8fc;
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    line-height: 1.85;
+  }
+
+  /* NAV */
+  .nav-bar {
+    background: #111111;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    justify-content: space-between;
+    border-bottom: 1px solid #222;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #f7f8fc;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--blue); }
+
+  /* HERO */
+  .hero {
+    background: var(--dark);
+    padding: 72px 40px 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 500px;
+    background: radial-gradient(ellipse, rgba(50,167,227,0.05) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--blue); display: block; margin-bottom: 20px;
+    position: relative; z-index: 1;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 900; line-height: 1.1; letter-spacing: -1px;
+    color: #f7f8fc; margin-bottom: 12px;
+    position: relative; z-index: 1;
+  }
+  .hero-title em { font-style: italic; color: var(--blue); }
+  .hero-sub {
+    font-family: 'Lora', serif;
+    font-size: 16px; font-style: italic;
+    color: #666; max-width: 480px; margin: 0 auto 32px;
+    line-height: 1.7; position: relative; z-index: 1;
+  }
+  .hero-meta {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px; position: relative; z-index: 1;
+  }
+  .hero-meta-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #444;
+  }
+  .hero-meta-sep { width:3px; height:3px; border-radius:50%; background:#333; }
+
+  /* BLOCK NAV */
+  .block-nav {
+    background: var(--dark-2);
+    border-bottom: 1px solid #2a2820;
+    padding: 0 40px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .block-nav-item {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    color: #555; text-decoration: none;
+    padding: 16px 24px;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .block-nav-item:hover { color: var(--blue); border-bottom-color: var(--blue); }
+
+  /* CONTENT WRAP */
+  .content-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 64px 40px 80px;
+  }
+
+  /* INTRO */
+  .intro-section { margin-bottom: 64px; }
+  .intro-section p {
+    font-size: 17px;
+    line-height: 1.9;
+    color: var(--ink-mid);
+    margin-bottom: 20px;
+  }
+  .intro-section p:last-child { margin-bottom: 0; }
+
+  /* BLOCK OVERVIEW */
+  .block-overview {
+    background: var(--paper-warm);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 32px 36px;
+    margin: 48px 0;
+  }
+  .block-overview-item {
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+    margin-bottom: 20px;
+  }
+  .block-overview-item:last-child { margin-bottom: 0; }
+  .block-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--blue); flex-shrink: 0; padding-top: 3px;
+  }
+  .block-overview-body {}
+  .block-overview-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--ink); margin-bottom: 3px;
+  }
+  .block-overview-desc {
+    font-family: 'Lora', serif;
+    font-size: 14px; font-style: italic; color: var(--ink-light); line-height: 1.5;
+  }
+
+  /* BLOCK SECTION */
+  .block-section {
+    margin-bottom: 72px;
+    padding-top: 64px;
+    border-top: 1px solid var(--rule);
+  }
+  .block-section:first-of-type { border-top: none; padding-top: 0; }
+
+  .block-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--blue); display: block; margin-bottom: 10px;
+  }
+  .block-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 900; color: var(--ink);
+    margin-bottom: 6px; line-height: 1.15;
+  }
+  .block-title em { font-style: italic; color: var(--blue); }
+  .block-subtitle {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--ink-light); margin-bottom: 36px;
+  }
+
+  /* BODY PROSE */
+  .prose p {
+    font-size: 17px;
+    line-height: 1.9;
+    color: var(--ink-mid);
+    margin-bottom: 20px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+
+  /* SECTION RULE */
+  .section-rule {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 36px 0;
+  }
+
+  /* DEGREE ENTRY */
+  .degree-entry { margin-bottom: 40px; }
+  .degree-entry:last-child { margin-bottom: 0; }
+  .degree-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .degree-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600; letter-spacing: 2px;
+    color: var(--blue); flex-shrink: 0;
+  }
+  .degree-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--ink);
+  }
+  .degree-label {
+    font-family: 'Lora', serif;
+    font-size: 13px; font-style: italic; color: var(--ink-light);
+  }
+  .degree-body p {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--ink-mid);
+    margin-bottom: 12px;
+  }
+  .degree-body p:last-child { margin-bottom: 0; }
+
+  /* CHORD SECTION */
+  .chord-section { margin-bottom: 48px; }
+  .chord-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--ink); margin-bottom: 6px;
+  }
+  .chord-intro {
+    font-size: 16px; color: var(--ink-mid); margin-bottom: 24px; line-height: 1.85;
+  }
+
+  /* LANDING NOTE */
+  .landing-note { margin-bottom: 32px; }
+  .landing-note-header {
+    display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px;
+  }
+  .landing-note-degree {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 2px; color: var(--blue); flex-shrink: 0;
+  }
+  .landing-note-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--ink);
+  }
+  .landing-note-body p {
+    font-size: 16px; line-height: 1.85; color: var(--ink-mid); margin-bottom: 10px;
+  }
+  .landing-note-body p:last-child { margin-bottom: 0; }
+  .use-when {
+    font-family: 'Lora', serif;
+    font-size: 14px; font-style: italic; color: var(--ink-light);
+    border-left: 2px solid var(--blue);
+    padding-left: 14px;
+    margin-top: 8px;
+  }
+
+  /* TABLE */
+  .ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin: 32px 0;
+  }
+  .ref-table th {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--blue);
+    border-bottom: 1px solid var(--rule);
+    padding: 10px 12px;
+    text-align: left;
+  }
+  .ref-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink-mid);
+    line-height: 1.5;
+    vertical-align: top;
+  }
+  .ref-table tr:last-child td { border-bottom: none; }
+  .ref-table .deg { font-family: 'JetBrains Mono', monospace; color: var(--blue); font-size: 12px; }
+  .ref-table .sweet { color: #4a8a5a; }
+  .ref-table .active { color: #a87820; }
+  .ref-table .tension { color: #b05030; }
+  .ref-table td.stranger { color: var(--gold-rich); font-style: italic; }
+  .table-key {
+    font-family: 'Lora', serif;
+    font-size: 13px; font-style: italic; color: var(--ink-light);
+    margin-top: -16px; margin-bottom: 32px;
+    display: flex; gap: 20px; flex-wrap: wrap;
+  }
+  .table-key-item { display: flex; align-items: center; gap: 6px; }
+  .table-key-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+
+  /* BEND TYPE */
+  .bend-type { margin-bottom: 32px; }
+  .bend-type-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 17px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--ink); margin-bottom: 10px;
+  }
+  .bend-type-body p {
+    font-size: 16px; line-height: 1.85; color: var(--ink-mid); margin-bottom: 10px;
+  }
+
+  /* PULL QUOTE */
+  .pull-quote {
+    background: var(--blue-pale);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 4px 4px 0;
+    padding: 20px 24px;
+    margin: 32px 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 17px; font-style: italic;
+    color: var(--ink);
+    line-height: 1.65;
+  }
+
+  /* GOLD CALLOUT */
+  .gold-callout {
+    background: var(--gold-pale);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 4px 4px 0;
+    padding: 20px 24px;
+    margin: 32px 0;
+    font-family: 'Lora', serif;
+    font-size: 16px; color: var(--ink-mid); line-height: 1.75;
+  }
+
+  /* SECTION HEADING */
+  .section-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 700; color: var(--ink);
+    margin: 40px 0 16px;
+    line-height: 1.2;
+  }
+  .section-heading em { font-style: italic; color: var(--blue); }
+
+  .subheading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(15px, 2vw, 18px);
+    font-weight: 700; color: var(--ink);
+    margin: 32px 0 12px;
+    line-height: 1.25;
+  }
+  .subheading em { font-style: italic; color: var(--gold-rich); }
+
+  /* VIDEO PLACEHOLDER */
+  .video-placeholder {
+    border: 1.5px dashed var(--blue);
+    background: var(--blue-pale);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 0 0 32px;
+    text-align: center;
+  }
+  .video-placeholder-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--blue); display: block; margin-bottom: 4px;
+  }
+  .video-placeholder-desc {
+    font-family: 'Lora', serif;
+    font-size: 13px; font-style: italic; color: var(--ink-light);
+  }
+
+  /* TAKEAWAY */
+  .takeaway {
+    background: var(--paper-warm);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 28px 32px;
+    margin-top: 48px;
+  }
+  .takeaway-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--blue); display: block; margin-bottom: 16px;
+  }
+  .takeaway p {
+    font-size: 16px; line-height: 1.85; color: var(--ink-mid); margin-bottom: 14px;
+  }
+  .takeaway p:last-child { margin-bottom: 0; }
+
+    /* PODIA EMBED OPTIMISATION */
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      -webkit-text-size-adjust: 100%;
+      text-rendering: optimizeLegibility;
+    }
+
+    .content-wrap {
+      width: 100%;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    .hero {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    img, video, iframe, table {
+      max-width: 100%;
+    }
+
+    .ref-table {
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        padding-top: 48px;
+        padding-bottom: 44px;
+      }
+
+      .content-wrap {
+        padding-top: 44px;
+        padding-bottom: 56px;
+      }
+
+      .block-overview,
+      .takeaway {
+        padding: 22px 20px;
+      }
+
+      .degree-header {
+        flex-wrap: wrap;
+        row-gap: 3px;
+      }
+
+      .bump-controls {
+        grid-template-columns: 1fr;
+      }
+
+      .bump-toggle-group:last-of-type {
+        justify-self: start;
+      }
+
+      .bump-score {
+        text-align: left;
+      }
+
+      .bump-card {
+        padding: 18px;
+      }
+    }
+
+</style>
+</head>
+<body>
+<!-- Podia-optimised standalone lesson. Designed to be hosted on GitHub Pages and embedded in Podia. -->
+
+<div class="content-wrap">
+<div class="block-section" id="block-2">
+  <span class="block-eyebrow">Block 2</span>
+  <h2 class="block-title">Scale Degrees <em>&amp; Personalities</em></h2>
+  <p class="block-subtitle">The In-Depth Analysis · Art of Slow Blues · BluesBlock Method</p>
+
+  <div class="prose">
+    <p>You've already done the hard part.</p>
+    <p>In the Scale Degree Explorer challenge, you sat with each note and listened, not for right answers, but for the feeling each one produced. Some settled. Some leaned. Some made you wince a little. You weren't analysing; you were noticing. And everything you noticed was true.</p>
+    <p>This lesson doesn't teach you something new. It gives you the language for what you already heard.</p>
+  </div>
+
+  <hr class="section-rule">
+
+  <h3 class="section-heading">From Addresses to <em>Personalities</em></h3>
+
+  <div class="prose">
+    <p>Here is a thought experiment.</p>
+    <p>I tell you I live at 42 Church Street. That's an address. It tells you exactly where I am, you can find it on a map, you can navigate to it. But it tells you nothing about what it feels like to walk through the door. Whether the street is quiet or busy. Whether the neighbours are warm. Whether you'd feel at home there or uneasy.</p>
+    <p>Now imagine I tell you instead: I live in a small terraced house on a narrow street near an old stone church, the kind of street where people still nod to each other in the mornings.</p>
+    <p>Same location. Completely different understanding.</p>
+    <p>That is the difference between a note name and a scale degree.</p>
+    <p>When you learn that there's a note on the G string at the fifth fret, you've learned an address. You can find it. That's genuinely useful, you need to be able to find a note before you can play it. But the address tells you nothing about what that note means in context. Whether it wants to move or can rest. Whether it aches or opens. Whether it belongs where you've placed it or wants somewhere else entirely.</p>
+    <p>A scale degree gives you all of that. Not just where the note is, but who it is.</p>
+    <p>And here is the practical magic that flows from this: scale degrees don't change when you change key. The ♭3 always feels like the ♭3. It always aches in the same direction. Learn it in A minor and you know it in every key, not as a shape to transpose, but as a feeling you can rely on.</p>
+    <p>Notes are addresses. Scale degrees are personalities. And personalities don't change when you move house.</p>
+  </div>
+
+  <hr class="section-rule">
+
+  <h3 class="section-heading">The Cast of <em>Characters</em></h3>
+
+  <div class="prose">
+    <p>Think of the fretboard not as a grid of positions to memorise, but as a cast of characters, each one with a distinct personality, an emotional quality, a way of behaving that you can learn to recognise and trust.</p>
+    <p>You already met them in the ear training exercise. Here are their names.</p>
+  </div>
+
+  <hr class="section-rule">
+
+  <div class="degree-entry">
+    <div class="degree-header">
+      <span class="degree-num">1</span>
+      <span class="degree-name">The Root</span>
+      <span class="degree-label">Home</span>
+    </div>
+    <div class="degree-body">
+      <p>The stable point. Every phrase either departs from the root or returns to it, sometimes both. When you land on the root at the end of a phrase, the listener exhales. They may not know why, but they feel it. The root doesn't do dramatic things. It doesn't need to. It's home.</p>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <div class="degree-entry">
+    <div class="degree-header">
+      <span class="degree-num">♭3</span>
+      <span class="degree-name">The 𝘣3</span>
+      <span class="degree-label">The Ache</span>
+    </div>
+    <div class="degree-body">
+      <p>The dark heart of the minor blues scale. This is the note that makes the blues sound like the blues, that characteristic colour that sits somewhere between melancholy and longing. Over the i chord it pulls gently toward the root, unresolved, leaning. Over the iv chord it takes on a different flavour, more restless, more searching.</p>
+      <p>B.B. King made a career out of bending toward the ♭3 and holding it just long enough for the listener to feel it in their chest. That feeling has a name now.</p>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <div class="degree-entry">
+    <div class="degree-header">
+      <span class="degree-num">4</span>
+      <span class="degree-name">The 4</span>
+      <span class="degree-label">Questioning</span>
+    </div>
+    <div class="degree-body">
+      <p>A note that creates movement and inquiry. It doesn't sit still, it leans forward into the next phrase, asking something. Used at the start of a line, it creates anticipation. Used at the end, it leaves something open, unfinished. The 4 is not a note you linger on. It is a note that moves.</p>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <div class="degree-entry">
+    <div class="degree-header">
+      <span class="degree-num">♭5</span>
+      <span class="degree-name">The ♭5</span>
+      <span class="degree-label">The Outsider</span>
+    </div>
+    <div class="degree-body">
+      <p>The blue note. Raw, slightly dangerous, unresolved. The ♭5 doesn't play well with others, it creates real tension when you hold it, and that tension is exactly its value. Use it deliberately. Pass through it with intention and it sounds like the blues. Sit on it too long without knowing why and it sounds like a mistake. The difference is always intention.</p>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <div class="degree-entry">
+    <div class="degree-header">
+      <span class="degree-num">5</span>
+      <span class="degree-name">The 5</span>
+      <span class="degree-label">Stable</span>
+    </div>
+    <div class="degree-body">
+      <p>A breath of air in a phrase that has been building. The 5 is resolved, open, reliable. After tension, after the ♭3 or the ♭5 has done its work, the 5 gives the listener something to stand on. It is not as settled as the root, but it is comfortable enough to rest on briefly. Think of it as a ledge rather than a landing.</p>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <div class="degree-entry">
+    <div class="degree-header">
+      <span class="degree-num">♭7</span>
+      <span class="degree-name">The ♭7</span>
+      <span class="degree-label">Yearning</span>
+    </div>
+    <div class="degree-body">
+      <p>One step short of home. The ♭7 is always reaching, it has enough resolution to feel like arrival, but not quite enough to feel like rest. It is, in many ways, the quintessential blues note. The feeling of being close to something without quite having it. Every guitarist who has ever bent toward the ♭7 and held it knows that feeling in their hands before they know it in theory.</p>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <h3 class="section-heading">The Same Note, <em>Different Chord</em></h3>
+
+  <div class="prose">
+    <p>You just met the cast. Six personalities, six feelings, each one earned by listening rather than being told.</p>
+    <p>Sit with that for a second, because it's about to get more complicated.</p>
+    <p>Every one of those personalities was measured against a single chord, the i chord. But a twelve bar blues doesn't stay on the i chord. The iv chord arrives. The V chord arrives. And when they do, does the ♭3 keep aching the way you just learned it aches? Does the ♭7 keep yearning?</p>
+    <p>Here is something worth sitting with.</p>
+    <p>Each of these personalities behaves slightly differently depending on the chord underneath it. You heard this in the V chord lesson, notes that felt comfortable over the i chord suddenly created real tension when the progression moved. That wasn't a mistake. That was the chord changing the meaning of the note.</p>
+    <p>Take the ♭3. Over the i chord it aches, gently, toward home. Over the iv chord it fully becomes the ♭7 of that chord, the same yearning, reaching quality you already know. Over the V chord it creates real tension, a pull that wants resolution the moment the chord moves on.</p>
+    <p>The note didn't change. The chord did.</p>
+    <p>Now you know your cast of characters in their positions over the i chord. Let's put them next to the other two chords and see what happens to each one.</p>
+  </div>
+
+  <table class="ref-table">
+    <thead>
+      <tr>
+        <th>Degree</th>
+        <th>Over i</th>
+        <th>Over iv</th>
+        <th>Over V</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="deg">1</td>
+        <td>1 · Home</td>
+        <td>5 · Stable</td>
+        <td>4 · Questioning</td>
+      </tr>
+      <tr>
+        <td class="deg">♭3</td>
+        <td>♭3 · Ache</td>
+        <td>♭7 · Yearning</td>
+        <td class="stranger">♭6 · Welcome Stranger</td>
+      </tr>
+      <tr>
+        <td class="deg">4</td>
+        <td>4 · Questioning</td>
+        <td>1 · Home</td>
+        <td>♭7 · Yearning</td>
+      </tr>
+      <tr>
+        <td class="deg">5</td>
+        <td>5 · Stable</td>
+        <td class="stranger">2 · Friendly Stranger</td>
+        <td>1 · Home</td>
+      </tr>
+      <tr>
+        <td class="deg">♭7</td>
+        <td>♭7 · Yearning</td>
+        <td>4 · Questioning</td>
+        <td>♭3 · Ache</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr class="section-rule">
+
+  <div class="prose">
+    <p>Look at that table. Three chords, five degrees each, fifteen things to hold in your head if you memorise it the hard way. This is a place many might lay down their anchor, and that's not a discipline problem, it's a design problem.</p>
+    <p>Here's the lifeline. You already know five of these, the personalities you just met a moment ago, all of them measured against the i chord. You don't need fifteen facts. You need those five, plus one small piece of arithmetic.</p>
+  </div>
+
+  <div class="prose">
+    <p>Lay your five degrees on a clock with seven positions instead of twelve. The root sits at 1. The ♭3 sits at 3. Then 4, then 5, then the ♭7 sits at 7. Notice the numbers already agree with the names, the ♭3 lives at position 3, the ♭7 lives at position 7, the flat is only ever telling you about quality, never about where the hand lands. Two positions, 2 and ♭6, sit empty for now, you'll meet both of them again in a moment. When you count past 7, you don't fall off the clock, you just wrap back round to 1.</p>
+  </div>
+
+  <div class="prose">
+    <p>Here's the whole rule. Want the iv chord version of a degree, add 4. Want the V chord version, add 3. That's it.</p>
+    <p>And it runs the other way too. If you're already sitting up in the iv chord shape and you can feel the i chord about to arrive, you don't have to shift position to find a strong landing, subtract 4 instead, and whatever degree you're parked on tells you exactly what it becomes once the root returns. Subtract 3 does the same thing coming back from the V chord. This is the move the best players seem to make without thinking about it, staying exactly where the hand already is and reaching for resolution rather than jumping somewhere new every time the chord changes. Most players never think to reach for it on purpose. Now you have a rule for it.</p>
+  </div>
+
+  <div class="gold-callout">
+    Take the root, sitting at 1. Add 4 and it lands on 5. Add 3 and it lands on 4. Now take the ♭7, sitting at 7. Add 4 and it doesn't just move, it wraps straight past 7 and lands back round at 4, fully becoming Questioning, the same personality the 4 already carries over the i chord.<br><br>Now run it backwards. You're up in the iv chord shape, parked on what reads as a 5. The i chord is about to return. Subtract 4, and that same note turns out to be the root all along. Same finger, same fret. You didn't move. The meaning did.
+  </div>
+
+  <div class="prose">
+    <p>Run that same piece of arithmetic across all five degrees and you get the whole table above, without ever having memorised fifteen separate facts. You worked them out.</p>
+  </div>
+
+  <div class="prose">
+    <p>One thing worth knowing before you take this to a backing track. The personality travels with the degree automatically, once you've learned it. Bump the root up to a 5 over the iv chord and it still carries that same settled, at home feeling, it's just relocated. You're not learning a new set of five personalities for every chord, you're learning five, once, and the rule hands you all fifteen for free.</p>
+  </div>
+
+  <div class="prose">
+    <p>Try it against a backing track before you move on. Play a degree over the i chord, name the number in your head, bump it forward the moment the chord changes. Then try it in reverse, park in a shape, and reach for the root as the i chord comes back around. Fifteen facts, or five facts and one small piece of arithmetic. You already know which one you'd rather carry into a solo.</p>
+  </div>
+
+  <hr class="section-rule">
+
+  <h4 class="subheading">Two Notes <em>Outside the Five</em></h4>
+
+  <div class="prose">
+    <p><strong>Friendly Stranger.</strong> Bump the 5 forward for the iv chord and you land on the 9th, outside your five pentatonic notes. Don't go hunting for it in your BluesBlock shape. But don't avoid it either, blues chords get extended constantly in real playing, and a 9th showing up underneath you is a colour, not a mistake. It's just not what this rule is built to find on purpose.</p>
+    <p><strong>Welcome Stranger.</strong> Bump the ♭3 forward for the V chord and you land on the ♭6, and this one isn't a rare guest. It's the same tension you'll meet properly when the V chord arrives later in this course, one of the most important places you can choose to land. The Chord Bump just told you where to find it, and what it's called.</p>
+    <p><strong>The ♭5</strong> doesn't appear on this clock at all. Friendly Stranger and Welcome Stranger are real degrees living outside your five. The ♭5 isn't a degree of the key, it's a chromatic passing tone, borrowed colour rather than a member of the scale, with no position to occupy because the clock was only ever built for the five that belong to it.</p>
+  </div>
+
+  <hr class="section-rule">
+
+  <h4 class="subheading">Practice <em>the Chord Bump</em></h4>
+
+  <div class="prose">
+    <p>Play as long as you like, no set number of questions. Forward moves you from the i chord into the iv or V chord. Reverse brings you back. Random throws everything into one session.</p>
+  </div>
+
+  <div class="bump-widget" id="bump-widget">
+    <div class="bump-controls">
+      <div class="bump-toggle-group" id="bw-dir-group">
+        <button type="button" class="bump-btn" id="bw-dir-forward">Forward</button>
+        <button type="button" class="bump-btn" id="bw-dir-reverse">Reverse</button>
+      </div>
+      <div class="bump-toggle-group">
+        <button type="button" class="bump-btn" id="bw-chord-iv">iv</button>
+        <button type="button" class="bump-btn" id="bw-chord-v">V</button>
+        <button type="button" class="bump-btn" id="bw-chord-random">Random</button>
+      </div>
+      <div class="bump-score" id="bw-score"></div>
+    </div>
+
+    <div class="bump-card">
+      <p class="bump-prompt" id="bw-prompt"></p>
+      <div class="bump-options" id="bw-options"></div>
+      <p class="bump-feedback" id="bw-feedback"></p>
+      <button type="button" class="bump-next" id="bw-next">Next question →</button>
+    </div>
+  </div>
+
+  <style>
+    .bump-widget { margin: 24px 0 8px; }
+    .bump-controls { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .bump-toggle-group { display: flex; gap: 6px; }
+    .bump-toggle-group:last-of-type { justify-self: center; }
+    .bump-btn {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; letter-spacing: 1px; text-transform: uppercase;
+      background: var(--paper-warm); color: var(--ink-mid);
+      border: 1px solid var(--rule); border-radius: 4px;
+      padding: 7px 14px; cursor: pointer; transition: all 0.15s ease;
+    }
+    .bump-btn:hover:not(:disabled) { border-color: var(--blue); color: var(--ink); }
+    .bump-btn.is-active { background: var(--blue); color: var(--white); border-color: var(--blue); }
+    .bump-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .bump-score {
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      color: var(--ink-light); text-align: right;
+    }
+    .bump-card {
+      background: var(--paper-warm); border: 1px solid var(--rule);
+      border-left: 3px solid var(--gold); border-radius: 4px;
+      padding: 20px 24px;
+    }
+    .bump-prompt { font-family: 'Lora', Georgia, serif; font-size: 16px; color: var(--ink); margin-bottom: 16px; }
+    .bump-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 8px; }
+    .bump-option {
+      font-family: 'JetBrains Mono', monospace; font-size: 13px;
+      background: var(--paper); color: var(--ink-mid);
+      border: 1px solid var(--rule); border-radius: 4px;
+      padding: 10px 12px; cursor: pointer; text-align: left;
+    }
+    .bump-option:hover:not(:disabled) { border-color: var(--gold); }
+    .bump-option:disabled { cursor: default; }
+    .bump-option.is-correct { border-color: #4a8a5a; color: #4a8a5a; }
+    .bump-option.is-wrong { border-color: #b05030; color: #b05030; }
+    .bump-feedback { font-family: 'JetBrains Mono', monospace; font-size: 12px; margin-top: 14px; display: none; }
+    .bump-next {
+      margin-top: 14px; display: none;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;
+      background: transparent; color: var(--blue); border: 1px solid var(--blue); border-radius: 4px;
+      padding: 7px 14px; cursor: pointer;
+    }
+    .bump-next:hover { background: var(--blue-pale); }
+  </style>
+
+  <script>
+    (function () {
+      const ALL = {1:{deg:'1',name:'Home'},2:{deg:'2',name:'Friendly stranger'},3:{deg:'♭3',name:'Ache'},4:{deg:'4',name:'Questioning'},5:{deg:'5',name:'Stable'},6:{deg:'♭6',name:'Welcome stranger'},7:{deg:'♭7',name:'Yearning'}};
+      const CORE = [1,3,4,5,7];
+      function bump(pos, delta) { return ((pos - 1 + delta) % 7 + 7) % 7 + 1; }
+      function deltaFor(dir, chord) { if (dir === 'forward') return chord === 'iv' ? 4 : 3; return chord === 'iv' ? -4 : -3; }
+      function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+      const el = id => document.getElementById(id);
+      const state = { dir: 'forward', chordMode: 'iv', score: { c: 0, t: 0 }, current: null, answered: false };
+
+      function refreshToggles() {
+        const randomActive = state.chordMode === 'random';
+        [el('bw-dir-forward'), el('bw-dir-reverse')].forEach(b => b.classList.remove('is-active'));
+        [el('bw-chord-iv'), el('bw-chord-v'), el('bw-chord-random')].forEach(b => b.classList.remove('is-active'));
+        el(state.dir === 'forward' ? 'bw-dir-forward' : 'bw-dir-reverse').classList.add('is-active');
+        el(state.chordMode === 'iv' ? 'bw-chord-iv' : state.chordMode === 'V' ? 'bw-chord-v' : 'bw-chord-random').classList.add('is-active');
+        el('bw-dir-forward').disabled = randomActive;
+        el('bw-dir-reverse').disabled = randomActive;
+        el('bw-dir-group').style.opacity = randomActive ? '0.35' : '1';
+      }
+
+      function updateScore() {
+        el('bw-score').textContent = state.score.t ? state.score.c + ' / ' + state.score.t + ' correct' : '';
+      }
+
+      function newQuestion() {
+        el('bw-feedback').style.display = 'none';
+        el('bw-next').style.display = 'none';
+        state.answered = false;
+        let dir, chord;
+        if (state.chordMode === 'random') {
+          dir = Math.random() < 0.5 ? 'forward' : 'reverse';
+          chord = Math.random() < 0.5 ? 'iv' : 'V';
+        } else {
+          dir = state.dir;
+          chord = state.chordMode;
+        }
+        const startPos = CORE[Math.floor(Math.random() * CORE.length)];
+        const delta = deltaFor(dir, chord);
+        const correctPos = bump(startPos, delta);
+        el('bw-prompt').textContent = dir === 'forward'
+          ? 'What is the personality of the ' + ALL[startPos].deg + ' when played over the ' + chord + ' chord?'
+          : 'You are holding the ' + ALL[startPos].deg + ' over the ' + chord + ' chord. What is its personality over the i chord?';
+        const pool = [1,2,3,4,5,6,7].filter(p => p !== correctPos);
+        const optionPos = shuffle([correctPos, ...shuffle(pool).slice(0,3)]);
+        state.current = { startPos, correctPos, delta };
+        const optionsEl = el('bw-options');
+        optionsEl.innerHTML = '';
+        optionPos.forEach(p => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'bump-option';
+          btn.textContent = ALL[p].deg + ' · ' + ALL[p].name;
+          btn.onclick = () => answer(p, btn);
+          optionsEl.appendChild(btn);
+        });
+      }
+
+      function answer(chosenPos, btn) {
+        if (state.answered) return;
+        state.answered = true;
+        const correct = chosenPos === state.current.correctPos;
+        state.score.t++;
+        if (correct) state.score.c++;
+        updateScore();
+        Array.from(el('bw-options').children).forEach(b => b.disabled = true);
+        btn.classList.add(correct ? 'is-correct' : 'is-wrong');
+        const d = state.current.delta;
+        const sign = d >= 0 ? '+' : '−';
+        const cp = state.current.correctPos;
+        const strangerNote = (cp === 2 || cp === 6) ? ' A stranger, outside the five.' : '';
+        const fb = el('bw-feedback');
+        fb.style.display = 'block';
+        fb.style.color = correct ? '#4a8a5a' : '#b05030';
+        fb.textContent = (correct ? 'Correct. ' : 'Not quite. ') + ALL[state.current.startPos].deg + ' ' + sign + ' ' + Math.abs(d) + ' wraps to ' + ALL[cp].deg + ', ' + ALL[cp].name + '.' + strangerNote;
+        el('bw-next').style.display = 'inline-block';
+      }
+
+      el('bw-next').onclick = newQuestion;
+      el('bw-dir-forward').onclick = () => { if (state.chordMode === 'random') return; state.dir = 'forward'; refreshToggles(); newQuestion(); };
+      el('bw-dir-reverse').onclick = () => { if (state.chordMode === 'random') return; state.dir = 'reverse'; refreshToggles(); newQuestion(); };
+      el('bw-chord-iv').onclick = () => { state.chordMode = 'iv'; refreshToggles(); newQuestion(); };
+      el('bw-chord-v').onclick = () => { state.chordMode = 'V'; refreshToggles(); newQuestion(); };
+      el('bw-chord-random').onclick = () => { state.chordMode = 'random'; refreshToggles(); newQuestion(); };
+
+      refreshToggles();
+      newQuestion();
+    })();
+  </script>
+</div>
+</div>
+
+</body>
+</html>
